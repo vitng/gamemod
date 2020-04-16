@@ -1,11 +1,11 @@
 class Pearl {
   constructor (){
-    this.r = 90;
+    this.r = 100;
     this.x = width;
-    this.y = height - this.r;
+    this.y = random(2, 5);
   }
   move(){
-    this.x += 12;
+    this.x -= 10;
   }
   show (){
     image (pImg, this.x, this.y, this.r, this.r);

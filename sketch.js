@@ -3,6 +3,7 @@ let fImg;
 let pImg;
 let bImg;
 let pearls = [];
+let hit = 0;
 ////let score = 0;
 //let state = 'splash';
 //let w, h ;
@@ -60,7 +61,8 @@ function draw() {
     t.move();
     t.show();
     if (fish.hits (t)){
-      noLoop();
+      //noLoop();
+      hit ++;
     }
   }
   fish.show ();
