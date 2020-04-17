@@ -4,10 +4,7 @@ let pImg;
 let bImg;
 let pearls = [];
 let hit = 0;
-////let score = 0;
-//let state = 'splash';
-//let w, h ;
-
+let snowflakes = [];
 
 function preload (){
   bImg = loadImage('background.jpg');
@@ -15,32 +12,13 @@ function preload (){
   pImg = loadImage('pearl.png');
 }
 function setup() {
-  createCanvas(1000, 700);
-  //textAlign (CENTER);
-  //textSize(20);
+  createCanvas(1000, 700, );
+  fill(240);
+  noStroke();
+
+
+
   fish = new Fish ();
-
-  //w= width;
-  //h=height;
-
-//  switch (state){
-  //  case ('splash'):
-  //  splashScreen();
-  //  break;
-  //  case ('gamePlay'):
-    //gamePlay
-  //  break;
-
-  //  case ('you Won'):
-  //  break;
-
-  //  case ('you Lose'):
-  //  break;
-
-    //default:
-    //break;
-//  }
-
 }
 function keyPressed (){
   if (key == ' '){
@@ -48,14 +26,12 @@ function keyPressed (){
   }
 }
 function draw() {
+
+
   if(random (1) <0.1 ){
     pearls.push ( new Pearl ());
   }
   background(bImg);
-
-  //fill(255, 33, 33);
-  // ellipse(w/4, h/2, 50);
-
 
   for (let t of pearls){
     t.move();
@@ -68,16 +44,49 @@ function draw() {
   fish.show ();
   fish.move();
 
+ let t = frameCount / 50;
+
+ for (let i = 0; i < random(5); i++) {
+   snowflakes.push(new snowflake());
+ }
+
+ for (let flake of snowflakes) {
+   flake.update(t);
+   flake.display();
+ }
 }
 
-//function splashScreen() {
-  //background (0);
-  //text ('click to start', w/2, h/2);
-//  fill(255);
-//}
-//function mousePressed(){
-  //if (dist (mouseX, mouseY, w/2, h/2) <=25){
-  //  score ++;
-  //}
+// snowflake class
+function snowflake() {
 
-//}
+ this.posX = random(-20, 0);
+ this.posY = 0;
+ this.initialangle = random(0, 1 * PI);
+ this.size = random(1, 5);
+
+
+ this.radius = sqrt(random(pow(width / 2, 2)));
+
+ this.update = function(time) {
+
+   let w = 0.7; // angular speed
+   let angle = w * time + this.initialangle;
+   this.posX = width / 2 + this.radius * sin(angle);
+
+   // different size snowflakes fall at slightly different y speeds
+   this.posY += pow(this.size, 0.5);
+
+   // delete snowflake if past end of screen
+   if (this.posY > height) {
+     let index = snowflakes.indexOf(this);
+     snowflakes.splice(index, 1);
+   }
+ };
+
+ this.display = function() {
+   ellipse(this.posX, this.posY, this.size);
+   //fill ("pink");
+ };
+
+
+}
